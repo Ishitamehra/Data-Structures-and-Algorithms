@@ -1,0 +1,43 @@
+//Evaluation of Postfix Expression
+
+/* Given string S representing a postfix expression, the task is to evaluate the expression and find the final value. Operators will only include the basic arithmetic operators like *, /, + and -. */
+
+class Solution
+{
+    //Function to evaluate a postfix expression.
+    public static int evaluatePostFix(String S)
+    {
+        String x[]=S.split("");
+        Stack<Integer> st=new Stack<>();
+        
+        for(String str: x)
+        {
+            int r=0;
+            if(str.equals("*") || str.equals("+") || str.equals("/") || str.equals("-"))
+            {
+                int a=st.pop();
+                int b=st.pop();
+                if(str.equals("*"))
+                    r=a*b;
+                if(str.equals("+"))
+                    r=a+b;
+                if(str.equals("/"))
+                {
+                    if(a==0 || b==0)
+                        r=0;
+                    else
+                        r=b/a;
+                }
+                if(str.equals("-"))
+                    r=b-a;
+                
+                st.push(r);
+            }
+            else
+            {
+                st.push(Integer.parseInt(str));
+            }
+        }
+        return st.peek();
+    }
+}
