@@ -1,0 +1,39 @@
+/* You are given the expression ‘expr’ with parenthesis. Your task is to find if the given expression contains duplicate parenthesis. A set of parenthesis is duplicate if multiple parenthesis surrounds the same subexpression. */
+
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+
+	public static boolean duplicateParanthesis(String expr) {
+		
+		Stack<Character> st=new Stack<>();
+		int count=0;
+		for(int i=0;i<expr.length();i++)
+		{
+		
+			char ch=expr.charAt(i);
+			if(ch==')')
+			{
+				count=0;
+				while(st.peek() != '(')
+				{
+					st.pop();
+					count++;
+				}
+				if(count<1)
+					return true;
+				else
+					st.pop();
+			}
+			else
+			{
+				st.push(ch);
+			}
+			
+			
+		}
+			return false;
+	}
+
+}
