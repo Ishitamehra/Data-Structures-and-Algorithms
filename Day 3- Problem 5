@@ -1,0 +1,70 @@
+/* Given a binary grid of n*m. Find the distance of the nearest 1 in the grid for each cell.
+The distance is calculated as |i1  - i2| + |j1 - j2|, where i1, j1 are the row number and column number of the current cell, and i2, j2 are the row number and column number of the nearest cell having value 1. There should be atleast one 1 in the grid. */
+
+class pair
+{
+    int x;
+    int y;
+    pair(int x,int y)
+    {
+        this.x=x;
+        this.y=y;
+    }
+}
+class Solution
+{
+    //Function to find distance of nearest 1 in the grid for each cell.
+    public int[][] nearest(int[][] grid)
+    {
+        Queue<pair> q=new LinkedList<>();
+        
+        int r=grid.length;
+        int c=grid[0].length;
+        int ans[][]=new int[r][c];
+        for(int[] row: ans)
+            Arrays.fill(row,Integer.MAX_VALUE);
+        
+        
+        for(int i=0;i<r;i++)
+        {
+            for(int j=0;j<c;j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    q.add(new pair(i,j));
+                    ans[i][j]=0;
+                }
+            }
+        }
+        
+        while(!q.isEmpty())
+        {
+            pair p=q.peek();
+            int i=p.x;
+            int j=p.y;
+            
+            if(i-1 >=0 && ans[i][j]+1 < ans[i-1][j])
+            {
+                ans[i-1][j]=ans[i][j]+1;
+                q.add(new pair(i-1,j));
+            }
+            if(j-1 >=0 && ans[i][j]+1 < ans[i][j-1])
+            {
+                ans[i][j-1]=ans[i][j]+1;
+                q.add(new pair(i,j-1));
+            }
+            if(i+1 <r && ans[i][j]+1 < ans[i+1][j])
+            {
+                ans[i+1][j]=ans[i][j]+1;
+                q.add(new pair(i+1,j));
+            }
+            if(j+1 <c && ans[i][j]+1 < ans[i][j+1])
+            {
+                ans[i][j+1]=ans[i][j]+1;
+                q.add(new pair(i,j+1));
+            }
+            q.remove();
+        }
+        return ans;
+    }
+}
