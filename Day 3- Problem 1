@@ -1,0 +1,26 @@
+/* You are given two arrays A and B of unique elements of size N. Check if array B is a stack permutation of the array A or not.
+Stack permutation means that array B can be created from array A using a stack and stack operations. */
+
+
+class Solution {
+    public static int isStackPermutation(int n, int[] ip, int[] op) {
+        int count=0;
+        Stack<Integer> st=new Stack<>();
+        for(int i=0;i<n;i++)
+        {
+            st.push(ip[i]);
+            
+            while(!st.isEmpty() && st.peek()==op[count])
+            {
+                st.pop();
+                count++;
+            }
+        }
+        if(st.isEmpty())
+            return 1;
+        else
+            return 0;
+        
+    }
+}
+            
