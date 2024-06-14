@@ -1,0 +1,33 @@
+/* Given N activities with their start and finish day given in array start[ ] and end[ ]. Select the maximum number of activities that can be performed by a single person, assuming that a person can only work on a single activity at a given day.
+Note : Duration of the activity includes both starting and ending day. */
+
+class Solution
+{
+    //Function to find the maximum number of activities that can
+    //be performed by a single person.
+    public static int activitySelection(int start[], int end[], int n)
+    {
+    int activities[][]=new int[start.length][3];
+    
+    for(int i=0;i<start.length;i++)
+    {
+        activities[i][0]=i;
+        activities[i][1]=start[i];
+        activities[i][2]=end[i];
+    }
+    Arrays.sort(activities,Comparator.comparingDouble(o ->o[2]));
+    
+    int max=1;
+    int lastEnd=activities[0][2];
+    
+    for(int i=1;i<n;i++)
+    {
+        if(activities[i][1]>lastEnd)
+        {
+            max++;
+            lastEnd=activities[i][2];
+        }
+    }
+    return max;
+    }
+}
