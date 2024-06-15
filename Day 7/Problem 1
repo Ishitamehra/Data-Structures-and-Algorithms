@@ -1,0 +1,16 @@
+/* You are given two arrays A and B of equal length N. Your task is to pair each element of array A to an element in array B, such that the sum of the absolute differences of all the pairs is minimum. */
+
+class Solution { 
+    long findMinSum(int[] A,int[] B,int N) { 
+        
+        Arrays.sort(A);
+        Arrays.sort(B);
+        
+        long min=0;
+        for(int i=0;i<N;i++)
+        {
+            min=min+Math.abs(A[i]-B[i]);
+        }
+        return min;
+    }
+}
