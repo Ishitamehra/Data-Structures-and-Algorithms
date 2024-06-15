@@ -1,0 +1,24 @@
+/* Given n objects, with each object has width wi. We need to arrange them in a pyramidal way such that :
+
+Total width of ith is less than (i + 1)th.
+Total number of objects in the ith is less than (i + 1)th.
+
+The task is to find the maximum height that can be achieved from given objects. */
+
+public class Main {
+    public static int getMaxHeight(int[] objects, int n) {
+        int s = 0, e = n;
+        int ans = 0;
+        while (s <= e) {
+            int mid = s + (e - s) / 2;
+            // 1 2 3 4 5 ... mid this will be the pyramid and
+            // then it takes 1+2+3+4+5+...+mid elements atleast
+            int reqElements = (mid * (mid + 1)) / 2;
+            if (reqElements <= n) {
+                ans = mid;
+                s = mid + 1;
+            } else
+                e = mid - 1;
+        }
+        return ans;
+    }
