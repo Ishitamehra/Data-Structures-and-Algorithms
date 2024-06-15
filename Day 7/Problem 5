@@ -1,0 +1,60 @@
+/* Given a set of N jobs where each jobi has a deadline and profit associated with it.
+
+Each job takes 1 unit of time to complete and only one job can be scheduled at a time. We earn the profit associated with job if and only if the job is completed by its deadline.
+
+Find the number of jobs done and the maximum profit.
+
+Note: Jobs will be given in the form (Jobid, Deadline, Profit) associated with that Job. Deadline of the job is the time before which job needs to be completed to earn the profit. */
+
+class Solution
+{
+    //Function to find the maximum profit and the number of jobs done.
+    int[] JobScheduling(Job arr[], int n)
+    {
+        Arrays.sort(arr, (a,b)-> (b.profit-a.profit));  //array is sorted in descending order
+        
+        int max=0;
+        for(int i=0;i<n;i++)    //maximum deadline is found to create the array
+        {
+            Job curr=arr[i];
+            if(curr.deadline >max)  
+                max=curr.deadline;
+        }
+        
+        int res[]=new int[max+1];
+        
+        for(int i=1;i<=max;i++) //filled the array with -1 from 1 till max and left 0
+            res[i]=-1;
+            
+        int profit=0,count=0;
+        for(int i=0;i<n;i++)
+        {
+            Job curr=arr[i];
+            for(int j=curr.deadline;j>0;j--)
+            {
+                if(res[j]==-1)
+                {
+                    res[j]=i;
+                    profit+=curr.profit;
+                    count++;
+                    break;
+                }
+            }
+        }
+        int narr[]=new int[2];
+        narr[0]=count;
+        narr[1]=profit;
+        return narr;
+    }
+}
+
+/*
+class Job {
+    int id, profit, deadline;
+    Job(int x, int y, int z){
+        this.id = x;
+        this.deadline = y;
+        this.profit = z; 
+    }
+}
+*/
