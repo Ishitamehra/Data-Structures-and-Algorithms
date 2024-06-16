@@ -1,0 +1,42 @@
+/* The task is to find the smallest number with sum of its digits as S and number of digits as D. 
+If there is no such number, then return -1. */
+
+class Solution{
+    static String smallestNumber(int S, int D){
+        
+        int res[]=new int[D];
+        String str="";
+        
+        if(S>9*D)
+            return "-1";
+            
+        if(S==0)
+        {
+            if(D==1)
+                return "0";
+            else
+                return "-1";
+        }
+        
+        S=S-1;
+        for(int i=D-1;i>0;i--)
+        {
+            if(S>9)
+            {
+                res[i]=9;
+                S=S-9;
+            }
+            else
+            {
+                res[i]=S;
+                S=0;
+            }
+        }
+        
+        res[0]=S+1;
+        for(int i=0;i<D;i++)
+            str=str+res[i];
+            
+        return str;
+    }
+}
