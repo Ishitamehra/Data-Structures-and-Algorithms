@@ -1,0 +1,52 @@
+/* Given weights and values of n items, we need to put these items in a knapsack of capacity w to get the maximum total value in the knapsack.
+Note: Unlike 0/1 knapsack, you are allowed to break the item here.  */
+
+/*
+class Item {
+    int value, weight;
+    Item(int x, int y){
+        this.value = x;
+        this.weight = y;
+    }
+}
+*/
+
+class Solution {
+    // Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int w, Item arr[], int n) {
+        
+        double ratio[][]=new double[n][2];
+        
+        for(int i=0;i<n;i++)
+        {
+            Item output=arr[i];
+            ratio[i][0]=i;
+            ratio[i][1]=(output.value/(double)output.weight);
+        }
+        
+        double capacity=(double)w;
+        double finalval=0.0;
+        Arrays.sort(ratio,Comparator.comparingDouble(o->-o[1]));
+        for(int i=0;i<n;i++)
+        {
+            
+            int idx=(int)ratio[i][0];
+            Item out2=arr[idx];
+            double weight1=out2.weight;
+            double value1=out2.value;
+            
+            if(weight1<=capacity)
+            {
+                capacity=capacity-weight1;
+                finalval=finalval+value1;
+            }
+            else
+            {
+                finalval=finalval+(ratio[i][1]*capacity);
+                capacity=0;
+                break;
+            }
+        }
+        return finalval;
+    }
+}
