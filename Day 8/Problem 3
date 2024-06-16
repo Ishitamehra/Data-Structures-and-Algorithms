@@ -1,0 +1,43 @@
+/* You are given N pairs of numbers. In every pair, the first number is always smaller than the second number. A pair (c, d) can follow another pair (a, b) if b < c. Chain of pairs can be formed in this fashion. You have to find the longest chain which can be formed from the given set of pairs.  */
+
+/*
+class Pair
+{
+    int x;
+    int y;
+    
+    public Pair(int a, int b)
+    {
+        x = a;
+        y = b;
+    }
+}
+*/
+
+class GfG
+{
+    int maxChainLength(Pair arr[], int n)
+    {
+       int res[][]=new int[n][2];
+       for(int i=0;i<n;i++)
+       {
+           Pair curr=arr[i];
+           res[i][0]=curr.x;
+           res[i][1]=curr.y;
+       }
+       Arrays.sort(res,Comparator.comparingDouble(o->o[1]));
+       
+       int count=1;
+       int lastEnd=res[0][1];
+       for(int i=1;i<n;i++)
+       {
+           if(res[i][0]>lastEnd)
+           {
+               count++;
+               lastEnd=res[i][1];
+           }
+       }
+       return count;
+    }
+}
+
