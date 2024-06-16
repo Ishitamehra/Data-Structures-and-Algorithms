@@ -1,0 +1,33 @@
+/* Given an array a[ ] of N elements. Consider array as a circular array i.e. element after an is a1. The task is to find maximum sum of the absolute difference between consecutive elements with rearrangement of array elements allowed i.e. after any rearrangement of array elements find |a1 – a2| + |a2 – a3| + …… + |an-1 – an| + |an – a1|. */
+
+class GFG
+{
+    long maxSum(long arr[] ,int n)
+    {
+        Arrays.sort(arr);
+        long val=0;
+        long newarr[]=new long[n];
+     
+        
+        int start=0,end=n-1;
+        for(int i=0;i<n-1;i=i+2)
+        {
+            newarr[i]=arr[start];
+            newarr[i+1]=arr[end]; 
+            start++;
+            end--;
+            
+        }
+        
+        
+        if(n%2!=0)
+            newarr[n-1]=arr[n/2];
+        
+        for(int i=0;i<n-1;i++)
+        {
+            val+=Math.abs(newarr[i]-newarr[i+1]);
+        }
+        val+=Math.abs(newarr[n-1]-newarr[0]);
+        return val;
+    }
+}
