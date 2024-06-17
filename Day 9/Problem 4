@@ -1,0 +1,60 @@
+/* Given a string S with repeated characters. The task is to rearrange characters in a string such that no two adjacent characters are the same.
+Note: The string has only lowercase English alphabets and it can have multiple solutions. Return any one of them. */
+
+class Solution
+{
+	public static String rearrangeCharacters(String str) {
+	
+		int freq[]=new int[26];
+		for(int i=0;i<str.length();i++)
+		{
+		    char ch=str.charAt(i);
+		    freq[ch-'a']++;
+		}
+		
+		int max=Integer.MIN_VALUE;
+		int mindex=0;
+		for(int i=0;i<26;i++)
+		{
+		    if(max<freq[i])
+		    {
+		        max=freq[i];
+		        mindex=i;
+		    }
+		}
+		
+		int l=str.length();
+		if(max>(l+1)/2 && l%2!=0)
+		    return "0";
+		
+		if(max>l/2 && l%2==0)
+		    return "0";
+		  
+		Character res[]=new Character[l];
+		int idx=0;//even positions  
+		while(max!=0)
+		{
+		    res[idx]=(char)(mindex+97);
+		    idx+=2;
+		    max--;
+		}
+		
+		for(int i=0;i<26;i++)
+        {
+            while(freq[i]!=0)
+            {
+                if(idx>l)
+                    idx=1;
+                
+                res[idx]=(char)(i+97);
+                idx+=2;
+            }
+        }
+        
+        if(res.length==str.length())
+            return "1";
+        else
+            return "0";
+		
+	}
+}
