@@ -1,0 +1,63 @@
+/* We are given a bar of chocolate composed of m*n square pieces. One should break the chocolate into single squares. Parts of the chocolate may be broken along the vertical and horizontal lines as indicated by the broken lines in the picture.
+
+A single break of a part of the chocolate along a chosen vertical or horizontal line divides that part into two smaller ones. Each break of a part of the chocolate is charged a cost expressed by a positive integer. This cost does not depend on the size of the part that is being broken but only depends on the line the break goes along. Let us denote the costs of breaking along consecutive vertical lines with x1, x2, ..., xm-1 and along horizontal lines with y1, y2, ..., yn-1.
+
+The cost of breaking the whole bar into single squares is the sum of the successive breaks. One should compute the minimal cost of breaking the whole chocolate into single squares.
+
+ */
+
+
+class Solution {
+    public static int minimumCostOfBreaking(int[] X, int[] Y,int M,int N) {
+
+        Integer ver1[] = new Integer[M];
+        Integer hor1[] = new Integer[N];
+
+        for (int i = 0; i < ver1.length; i++) {
+            ver1[i] = X[i];
+        }
+
+        for (int i = 0; i < hor1.length; i++) {
+            hor1[i] = Y[i];
+        }
+
+        // Sort arrays in reverse order
+        Arrays.sort(ver1, Collections.reverseOrder());
+        Arrays.sort(hor1, Collections.reverseOrder());
+
+        // Initialize variables
+        int h = 0, v = 0;
+        int hp = 1, vp = 1;
+        int cost = 0;
+
+        // Calculate minimum cost
+        while (h < hor1.length && v < ver1.length) {
+            if (hor1[h] < ver1[v]) {
+                cost += ver1[v] * hp;
+                v++;
+                vp++;
+            } else {
+                cost += hor1[h] * vp;
+                h++;
+                hp++;
+            }
+        }
+
+        // Process remaining horizontal cuts
+        while (h < hor1.length) {
+            cost += hor1[h] * vp;
+            h++;
+            hp++;
+        }
+
+        // Process remaining vertical cuts
+        while (v < ver1.length) {
+            cost += ver1[v] * hp;
+            v++;
+            vp++;
+        }
+
+        return cost;
+    }
+}
+        
