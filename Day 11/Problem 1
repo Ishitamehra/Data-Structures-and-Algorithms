@@ -1,0 +1,35 @@
+/* Given a rod of length N inches and an array of prices, price[]. price[i] denotes the value of a piece of length i. Determine the maximum value obtainable by cutting up the rod and selling the pieces.*/
+
+class Solution{
+    public int cutRod(int price[], int n) {
+        
+        int len=price.length;
+        int dp[][]=new int[len+1][n+1];
+        int wt[]=new int[n+1];
+        for(int i=0;i<n;i++)
+        {
+            wt[i]=i+1;
+            //System.out.println(wt[i]);   
+        }    
+            
+            
+        for(int i=1;i<len+1;i++)
+        {
+            for(int j=1;j<n+1;j++)
+            {
+                int v=price[i-1];
+                int w=wt[i-1];
+                if(w<=j)
+                {
+                    int val1=v+dp[i][j-w];  //unbound knapsack - include
+                    int val2=dp[i-1][j]; //exclude
+                    
+                    dp[i][j]=Math.max(val1,val2);
+                }
+                else
+                    dp[i][j]=dp[i-1][j];
+            }
+        }
+        return dp[len][n];
+    }
+}
