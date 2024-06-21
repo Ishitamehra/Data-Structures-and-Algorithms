@@ -1,0 +1,28 @@
+/* Given an array of non-negative integers, and a value sum, determine if there is a subset of the given set with sum equal to given sum.  */
+
+class Solution{
+
+
+    static Boolean isSubsetSum(int N, int arr[], int sum){
+        
+        boolean dp[][]=new boolean[N+1][sum+1];     //sum==W in 0-1 knapsack
+        
+        for(int i=0;i<N+1;i++)
+            dp[i][0]=true;
+            
+        for(int i=1;i<N+1;i++)
+        {
+            for(int j=1;j<sum+1;j++)
+            {
+                int w=arr[i-1];
+                
+                if(w<=j && dp[i-1][j-w]==true)     //include
+                    dp[i][j]=true;
+                    
+                if(dp[i-1][j]==true)   //exclude
+                    dp[i][j]=true;
+            }
+        }
+        return dp[N][sum];
+    }
+}
