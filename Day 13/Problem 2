@@ -1,0 +1,48 @@
+/* Given an array arr of size n containing non-negative integers, the task is to divide it into two sets S1 and S2 such that the absolute difference between their sums is minimum and find the minimum difference */
+
+class Solution
+{
+
+	public int minDifference(int arr[], int n) 
+	{ 
+	    int sum=0;
+	    for(int i=0;i<n;i++)
+	        sum+=arr[i];
+	        
+	    int s=sum/2;
+	    
+	    int dp[][]=new int[n+1][s+1];
+	    
+	    for(int i=0;i<n+1;i++)
+	        dp[i][0]=1;
+	        
+	    
+	    for(int i=1;i<n+1;i++)
+	    {
+	        for(int j=1;j<s+1;j++)
+	        {
+	            int w=arr[i-1];
+	            if(w<=j && dp[i-1][j-w]==1)
+	            {
+	                dp[i][j]=1;
+	            }
+	            if(dp[i-1][j]==1)
+	                dp[i][j]=1;
+	        }
+	    }
+	    
+	    int min=Integer.MAX_VALUE;
+	    
+	    for(int s1=0;s1<=s;s1++)
+	    {
+	        if(dp[n][s1]==1)
+	        {
+	            int abso=Math.abs((sum-s1)-s1);
+	            min=Math.min(min,abso);
+	        }
+	    }
+	    
+	    return min;
+	} 
+}
+
