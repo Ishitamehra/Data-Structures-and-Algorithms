@@ -1,0 +1,34 @@
+*/ Given an array arr[] of size N, check if it can be partitioned into two parts such that the sum of elements in both parts is the same.  */
+
+class Solution{
+    static int equalPartition(int N, int arr[])
+    {
+        int s,sum=0;
+        for(int i=0;i<N;i++)
+            sum+=arr[i];
+            
+        if(sum%2!=0)
+            return 0;
+        else
+            s=sum/2;
+            
+        int dp[][]=new int[N+1][s+1];
+        
+        for(int i=0;i<N;i++)
+            dp[i][0]=1;
+            
+        for(int i=1;i<N+1;i++)
+        {
+            for(int j=1;j<s+1;j++)
+            {
+                int w=arr[i-1];
+                if(w<=j && dp[i-1][j-w]==1)
+                    dp[i][j]=1;
+                    
+                if(dp[i-1][j]==1)
+                    dp[i][j]=1;
+            }
+        }
+        return dp[N][s];
+    }
+}
