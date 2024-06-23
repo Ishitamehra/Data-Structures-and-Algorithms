@@ -1,0 +1,35 @@
+/* Given a string s. In one step you can insert any character at any index of the string.
+
+Return the minimum number of steps to make s palindrome.
+
+A Palindrome String is one that reads the same backward as well as forward. */
+
+class Solution {
+    public int minInsertions(String s) {
+        
+        String s2="";
+        int len=s.length();
+        int dp[][]=new int[len+1][len+1];
+        for(int i=len-1;i>=0;i--)
+            s2=s2+s.charAt(i);
+
+        for(int i=1;i<len+1;i++)
+        {
+            for(int j=1;j<len+1;j++)
+            {
+                char ch1=s.charAt(i-1);
+                char ch2=s2.charAt(j-1);
+                if(ch1==ch2)
+                    dp[i][j]=1+dp[i-1][j-1];
+                else
+                {
+                    int val1=dp[i-1][j];
+                    int val2=dp[i][j-1];
+                    dp[i][j]=Math.max(val1,val2);
+                }
+            }
+        }
+        int lcp=dp[len][len];
+        return (len-lcp);
+    }
+}
