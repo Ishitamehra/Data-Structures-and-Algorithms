@@ -1,0 +1,45 @@
+/* Given a binary tree, determine if it is 
+height-balanced  */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    static boolean flag;
+    public boolean isBalanced(TreeNode root) {
+        flag=true;
+        if(root==null)
+            flag=true;
+        
+        height(root);
+        return flag;
+    }
+
+    public static int height(TreeNode root)
+    {
+        if(root==null)
+            return 0;
+
+        int ln=height(root.left);
+        int rn=height(root.right);
+
+        int diff=Math.abs(ln-rn);
+        if(diff>1)
+            flag=false;
+        
+        int h=Math.max(ln,rn)+1;
+        return h;
+    }
+}
