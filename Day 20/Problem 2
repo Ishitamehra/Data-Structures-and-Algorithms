@@ -1,0 +1,61 @@
+/* Given a binary tree, print the bottom view from left to right.
+A node is included in bottom view if it can be seen when we look at the tree from bottom.
+
+                      20
+                    /    \
+                  8       22
+                /   \        \
+              5      3       25
+                    /   \      
+                  10    14
+
+For the above tree, the bottom view is 5 10 3 14 25. */
+
+class Pair
+{
+    Node node;
+    int hd;
+    Pair(Node node,int hd)
+    {
+        this.node=node;
+        this.hd=hd;
+    }
+}
+class Solution
+{
+    //Function to return a list containing the bottom view of the given tree.
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        
+        ArrayList<Integer> list=new ArrayList<>();
+        
+        Map<Integer,Integer> map=new HashMap<>();
+        Queue<Pair> q=new LinkedList<>();
+        q.add(new Pair(root,0));
+        int max=Integer.MIN_VALUE;
+        int min=Integer.MAX_VALUE;
+        
+        while(!q.isEmpty())
+        {
+            Pair curr=q.remove();
+            Node node1=curr.node;
+            int hd1=curr.hd;
+            
+            map.put(hd1,node1.data);
+            
+            if(node1.left!=null)
+                q.add(new Pair(node1.left,hd1-1));
+                
+            if(node1.right!=null)
+                q.add(new Pair(node1.right,hd1+1));
+            
+            min=Math.min(min,hd1);
+            max=Math.max(max,hd1);
+            
+        }
+        for(int i=min;i<=max;i++)
+            list.add(map.get(i));
+            
+        return list;
+    }
+}
