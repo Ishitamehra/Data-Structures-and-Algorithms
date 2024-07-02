@@ -1,0 +1,19 @@
+/* Geek wants to know the traversals required to construct a unique binary tree. Given a pair of traversal, return true if it is possible to construct unique binary tree from the given traversals otherwise return false.
+
+Each traversal is represented with an integer: preorder - 1, inorder - 2, postorder - 3.  */
+
+class Solution{
+    
+    public static boolean isPossible(int a, int b){
+        
+        if(a==1 && b==2 || a==2 && b==1)
+            return true;
+        
+        if(a==2 && b==3 || a==3 && b==2)
+            return true;
+            
+        return false;
+        
+        
+    }
+}
