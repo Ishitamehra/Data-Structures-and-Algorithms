@@ -1,0 +1,56 @@
+/* Given an undirected graph with V vertices labelled from 0 to V-1 and E edges, check whether it contains any cycle or not. Graph is in the form of adjacency list where adj[i] contains all the nodes ith node is having edge with. */
+
+class Solution {
+    // Function to detect cycle in an undirected graph.
+    
+    class Pair
+    {
+        int first;
+        int second;
+        Pair(int first,int second)
+        {
+            this.first=first;
+            this.second=second;
+        }
+    }
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        
+        boolean vis[]=new boolean[V];
+        for(int i=0;i<V;i++)
+        {
+            if(!vis[i])
+            {
+                if(bfs(adj, vis, i, -1))
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean bfs(ArrayList<ArrayList<Integer>> adj, boolean[] vis, int curr, int par)
+    {
+        Queue<Pair> q=new LinkedList<>();
+        q.add(new Pair(curr,par));
+        vis[curr]=true;
+        
+        while(!q.isEmpty())
+        {
+            Pair curr2=q.remove();
+            int node=curr2.first;
+            int parent=curr2.second;
+            
+            for(int i=0;i<(adj.get(node)).size();i++)
+            {
+                int dest=(adj.get(node)).get(i);
+                if(!vis[dest])
+                {
+                    q.add(new Pair(dest,node));
+                    vis[dest]=true;
+                }
+                else if(vis[dest] && parent != dest)
+                    return true;
+            }
+        }
+        return false;
+    }
+}
