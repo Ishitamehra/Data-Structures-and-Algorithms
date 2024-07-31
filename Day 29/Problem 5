@@ -1,0 +1,34 @@
+/* Given a binary array nums and an integer goal, return the number of non-empty subarrays with a sum goal.
+
+A subarray is a contiguous part of the array. */
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return (cal(nums,goal)-cal(nums,goal-1));
+
+    }
+
+    public int cal(int[] nums, int goal)
+    {
+        if(goal<0)
+            return 0;
+        int left=0,right=0;
+        int count=0,sum=0;
+
+        while(right<nums.length)
+        {
+            sum=sum+nums[right];
+            while(sum>goal)
+            {
+                sum=sum-nums[left];
+                left++;
+            }
+            count=count+(right-left+1);
+
+            right++;
+        }
+        return count;
+    }
+
+    
+}
